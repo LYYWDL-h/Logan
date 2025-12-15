@@ -1,0 +1,7 @@
+{
+  "name": "Jiantu - Personalized Travel",
+  "description": "A smart travel planning application featuring OSRM routing, custom waypoints, and personalized user profiles.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
