@@ -45,7 +45,7 @@ export const fetchRoute = async (waypoints: Waypoint[]): Promise<RouteData | nul
 
 // Updated return type to include error info
 export const fetchOptimizedRoute = async (waypoints: Waypoint[]): Promise<{ sortedWaypoints: Waypoint[], routeData: RouteData } | { error: string }> => {
-  if (waypoints.length < 2) return { error: 'Not enough points to optimize' };
+  if (waypoints.length < 2) return { error: '地点不足，无法优化' };
 
   const coordinates = waypoints
     .map((wp) => `${wp.lng},${wp.lat}`)
@@ -60,22 +60,22 @@ export const fetchOptimizedRoute = async (waypoints: Waypoint[]): Promise<{ sort
 
     if (!response.ok) {
         // Handle HTTP errors (like 429 Too Many Requests)
-        return { error: data.message || `Server Error: ${response.status} ${response.statusText}` };
+        return { error: data.message || `服务器错误: ${response.status} ${response.statusText}` };
     }
 
     if (data.code !== 'Ok') {
         // Handle OSRM logic errors (like NoRoute)
         let msg = data.message || data.code;
-        if (data.code === 'NoRoute') msg = 'Cannot find a driving route between these locations.';
+        if (data.code === 'NoRoute') msg = '无法找到连接这些地点的驾车路线。';
         return { error: msg };
     }
     
     if (!data.trips || data.trips.length === 0) {
-        return { error: 'No trip solution found.' };
+        return { error: '未找到行程方案。' };
     }
 
     if (!data.waypoints) {
-         return { error: 'Optimization failed: Invalid response structure (missing waypoints).' };
+         return { error: '优化失败：响应结构无效（缺少路点信息）。' };
     }
 
     // In OSRM Trip response, the `waypoints` array in the root object is sorted by the visit order.
@@ -96,14 +96,14 @@ export const fetchOptimizedRoute = async (waypoints: Waypoint[]): Promise<{ sort
 
   } catch (error) {
     console.error('OSRM Optimization Error:', error);
-    return { error: error instanceof Error ? error.message : 'Network connection failed' };
+    return { error: error instanceof Error ? error.message : '网络连接失败' };
   }
 };
 
 export const searchLocation = async (query: string): Promise<{ name: string; lat: number; lng: number } | null> => {
   try {
     const response = await fetch(
-      `${NOMINATIM_BASE_URL}/search?format=json&q=${encodeURIComponent(query)}&limit=1`
+      `${NOMINATIM_BASE_URL}/search?format=json&q=${encodeURIComponent(query)}&limit=1&accept-language=zh-CN`
     );
 
     if (!response.ok) throw new Error('Search failed');

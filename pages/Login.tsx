@@ -15,7 +15,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     setLoading(true);
     try {
         // Now we wait for the parent to finish the API call
-        await onLogin(email, name || 'Traveler');
+        await onLogin(email, name || '旅行者');
     } catch (e) {
         console.error("Login Error", e);
         setLoading(false);
@@ -38,7 +38,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           简 途
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 uppercase tracking-widest">
-            Jiantu · Personalized Travel System
+            Jiantu · 个性化旅行系统
         </p>
       </div>
 
@@ -48,7 +48,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Your Name
+                您的姓名
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -59,7 +59,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                   name="name"
                   type="text"
                   autoComplete="name"
-                  placeholder="Enter your name"
+                  placeholder="请输入您的姓名"
                   className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm bg-white/50"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -69,7 +69,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+                电子邮箱
               </label>
               <div className="mt-1">
                 <input
@@ -87,7 +87,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
+                密码
               </label>
               <div className="mt-1">
                 <input
@@ -108,7 +108,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 disabled={loading}
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all transform hover:scale-[1.02]"
               >
-                {loading ? 'Connecting...' : 'Start Your Journey'}
+                {loading ? '连接中...' : '开启您的旅程'}
                 {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
               </button>
             </div>
@@ -121,7 +121,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-white text-gray-500 rounded-full">
-                  Or continue as guest
+                  或以访客身份继续
                 </span>
               </div>
             </div>

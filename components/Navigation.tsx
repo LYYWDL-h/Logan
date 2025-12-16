@@ -31,7 +31,7 @@ const Navigation: React.FC<NavigationProps> = ({ user, currentView, onChangeView
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-full transition-colors`}
               >
                 <Map className="w-4 h-4 mr-2" />
-                Planner
+                行程规划
               </button>
               <button
                 onClick={() => onChangeView(ViewState.DIARIES)}
@@ -42,7 +42,7 @@ const Navigation: React.FC<NavigationProps> = ({ user, currentView, onChangeView
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-full transition-colors`}
               >
                 <BookOpen className="w-4 h-4 mr-2" />
-                Community Diaries
+                旅行社区
               </button>
               <button
                 onClick={() => onChangeView(ViewState.PROFILE)}
@@ -53,14 +53,14 @@ const Navigation: React.FC<NavigationProps> = ({ user, currentView, onChangeView
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium h-full transition-colors`}
               >
                 <UserIcon className="w-4 h-4 mr-2" />
-                Profile
+                个人中心
               </button>
             </div>
           </div>
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-700 font-medium hidden md:block">Welcome, {user.name}</span>
+                <span className="text-sm text-gray-700 font-medium hidden md:block">欢迎, {user.name}</span>
                 <img
                   className="h-8 w-8 rounded-full border border-gray-200"
                   src={user.avatar}
@@ -69,7 +69,7 @@ const Navigation: React.FC<NavigationProps> = ({ user, currentView, onChangeView
                 <button
                   onClick={onLogout}
                   className="ml-4 p-2 rounded-full text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
-                  title="Sign out"
+                  title="退出登录"
                 >
                   <LogOut className="h-5 w-5" />
                 </button>

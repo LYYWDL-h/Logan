@@ -14,24 +14,24 @@ const SEED_DIARIES: DiaryEntry[] = [
   {
     id: '1',
     author: { name: 'Sarah Chen', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d', isCurrentUser: false },
-    title: 'Hidden Gems in Beijing Hutongs',
-    content: 'Spent the afternoon getting lost in the winding alleys near the Drum Tower. Found a tiny coffee shop that serves the best hand-drip brew. The juxtaposition of old grey bricks and modern lifestyle is fascinating.',
-    location: 'Beijing, Dongcheng',
+    title: '北京胡同里的隐秘宝藏',
+    content: '下午在鼓楼附近的蜿蜒胡同里迷路了。发现了一家很小的咖啡馆，手冲咖啡很棒。青砖古瓦与现代生活的碰撞令人着迷。',
+    location: '北京, 东城区',
     date: '2023-10-15',
     imageUrl: 'https://images.unsplash.com/photo-1603206240216-29729a43a759?auto=format&fit=crop&q=80&w=800',
     likes: 124,
     isLiked: false,
     comments: [
-      { id: 'c1', author: { name: 'David Li', avatar: 'https://i.pravatar.cc/150?u=david' }, content: 'I know exactly where this is! Love that spot.', date: '2023-10-15' }
+      { id: 'c1', author: { name: 'David Li', avatar: 'https://i.pravatar.cc/150?u=david' }, content: '我知道这个地方！非常喜欢那里。', date: '2023-10-15' }
     ],
     tags: ['Deep Explorer', 'Culture']
   },
   {
     id: '2',
     author: { name: 'Mike Ross', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d', isCurrentUser: false },
-    title: 'Efficiency Run: Great Wall',
-    content: 'Managed to beat the crowds at Mutianyu by arriving at 7 AM. The morning mist over the wall was absolutely magical. Took the toboggan down - highly recommended!',
-    location: 'Mutianyu Great Wall',
+    title: '特种兵行程：慕田峪长城',
+    content: '早上7点到达慕田峪，成功避开了人群。长城上的晨雾简直太神奇了。坐滑道下来的——强烈推荐！',
+    location: '慕田峪长城',
     date: '2023-10-12',
     imageUrl: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&q=80&w=800',
     likes: 89,
@@ -80,10 +80,13 @@ export const api = {
       // Simulate backend logic: generate token/user
       const user: User = {
         id: Math.random().toString(36).substr(2, 9),
-        name: name || 'Traveler',
+        name: name || '旅行者',
         email,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'Traveler')}&background=0ea5e9&color=fff`,
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name || '旅行者')}&background=0ea5e9&color=fff`,
         persona: 'Free Spirit', // Default
+        age: 25,
+        profession: '探险家',
+        bio: '准备好迎接下一次冒险！',
         stats: { tripsPlanned: 0, placesVisited: 0, kmTraveled: 0 }
       };
       db.saveUser(user);

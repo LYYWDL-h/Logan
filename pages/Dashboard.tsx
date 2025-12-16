@@ -6,14 +6,21 @@ import { MapPin, Navigation as NavIcon, Clock, MoveVertical, Trash2, PlusCircle,
 
 // Mock Data for Recommendations
 const RECOMMENDED_PLACES: Place[] = [
-  { id: '1', name: 'The Palace Museum', category: 'History', lat: 39.9163, lng: 116.3972, rating: 4.9, price: 60, image: 'https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer', 'Efficiency Planner'] },
-  { id: '2', name: 'Universal Studios', category: 'Entertainment', lat: 39.8595, lng: 116.6661, rating: 4.7, price: 418, image: 'https://images.unsplash.com/photo-1533618840-7e30d66c1524?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Free Spirit', 'Creative Traveler'] },
-  { id: '3', name: 'Summer Palace', category: 'Nature', lat: 39.9993, lng: 116.2753, rating: 4.8, price: 30, image: 'https://images.unsplash.com/photo-1546153673-a63e9f802148?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Free Spirit', 'Deep Explorer'] },
-  { id: '4', name: '798 Art Zone', category: 'Art', lat: 39.9839, lng: 116.4950, rating: 4.6, price: 0, image: 'https://images.unsplash.com/photo-1550951298-5c7b95a66b21?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Creative Traveler', 'Free Spirit'] },
-  { id: '5', name: 'Temple of Heaven', category: 'History', lat: 39.8822, lng: 116.4066, rating: 4.7, price: 15, image: 'https://images.unsplash.com/photo-1598418037309-84d72836214f?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer'] },
-  { id: '6', name: 'Sanlitun Taikoo Li', category: 'Shopping', lat: 39.9360, lng: 116.4549, rating: 4.5, price: 0, image: 'https://images.unsplash.com/photo-1555406059-42b7858c440a?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Efficiency Planner', 'Free Spirit'] },
-  { id: '7', name: 'Mutianyu Great Wall', category: 'Adventure', lat: 40.4320, lng: 116.5629, rating: 4.9, price: 45, image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer', 'Creative Traveler'] },
+  { id: '1', name: '故宫博物院', category: '历史', lat: 39.9163, lng: 116.3972, rating: 4.9, price: 60, image: 'https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer', 'Efficiency Planner'] },
+  { id: '2', name: '环球影城', category: '娱乐', lat: 39.8595, lng: 116.6661, rating: 4.7, price: 418, image: 'https://images.unsplash.com/photo-1533618840-7e30d66c1524?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Free Spirit', 'Creative Traveler'] },
+  { id: '3', name: '颐和园', category: '自然', lat: 39.9993, lng: 116.2753, rating: 4.8, price: 30, image: 'https://images.unsplash.com/photo-1546153673-a63e9f802148?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Free Spirit', 'Deep Explorer'] },
+  { id: '4', name: '798艺术区', category: '艺术', lat: 39.9839, lng: 116.4950, rating: 4.6, price: 0, image: 'https://images.unsplash.com/photo-1550951298-5c7b95a66b21?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Creative Traveler', 'Free Spirit'] },
+  { id: '5', name: '天坛', category: '历史', lat: 39.8822, lng: 116.4066, rating: 4.7, price: 15, image: 'https://images.unsplash.com/photo-1598418037309-84d72836214f?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer'] },
+  { id: '6', name: '三里屯太古里', category: '购物', lat: 39.9360, lng: 116.4549, rating: 4.5, price: 0, image: 'https://images.unsplash.com/photo-1555406059-42b7858c440a?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Efficiency Planner', 'Free Spirit'] },
+  { id: '7', name: '慕田峪长城', category: '冒险', lat: 40.4320, lng: 116.5629, rating: 4.9, price: 45, image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&q=80&w=300&h=200', tags: ['Deep Explorer', 'Creative Traveler'] },
 ];
+
+const PERSONA_DISPLAY_MAP: Record<string, string> = {
+  'Free Spirit': '自由灵魂',
+  'Deep Explorer': '深度探索者',
+  'Efficiency Planner': '效率规划师',
+  'Creative Traveler': '创意旅行家'
+};
 
 interface DashboardProps {
   user: User;
@@ -43,7 +50,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }, [waypoints.length]); 
 
   const handleMapClick = (lat: number, lng: number) => {
-    addWaypoint(`Point ${waypoints.length + 1}`, lat, lng);
+    addWaypoint(`地点 ${waypoints.length + 1}`, lat, lng);
   };
 
   const addWaypoint = (name: string, lat: number, lng: number) => {
@@ -75,7 +82,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       addWaypoint(result.name, result.lat, result.lng);
       setSearchQuery('');
     } else {
-      setError('Location not found. Try a different name.');
+      setError('未找到该地点，请尝试其他名称。');
       setTimeout(() => setError(null), 3000);
     }
   };
@@ -158,14 +165,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     if (data) {
       setRouteData(data);
     } else {
-      setError('Could not calculate a route between these points.');
+      setError('无法计算这些点之间的路线。');
       setTimeout(() => setError(null), 4000);
     }
   };
 
   const handleSmartOptimize = async () => {
     if (waypoints.length < 3) {
-      setError('Add at least 3 points to optimize the order.');
+      setError('请至少添加3个地点以进行优化。');
       setTimeout(() => setError(null), 3000);
       return;
     }
@@ -182,10 +189,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         setRouteData(result.routeData);
       }
     } else if (result && 'error' in result) {
-      setError(`Optimization failed: ${result.error}`);
+      setError(`优化失败: ${result.error}`);
       setTimeout(() => setError(null), 6000); // Show longer for readability
     } else {
-      setError('Optimization failed. Server might be busy.');
+      setError('优化失败，服务器可能繁忙。');
       setTimeout(() => setError(null), 4000);
     }
   };
@@ -221,7 +228,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input 
                     type="text" 
-                    placeholder="Search places to add..." 
+                    placeholder="搜索地点..." 
                     className="w-full pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
@@ -240,13 +247,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 onClick={() => setActiveTab('itinerary')}
                 className={`flex-1 py-3 text-sm font-semibold flex items-center justify-center gap-2 ${activeTab === 'itinerary' ? 'text-brand-600 border-b-2 border-brand-500 bg-white' : 'text-gray-500 hover:text-gray-700'}`}
             >
-                <MapPin className="w-4 h-4" /> Itinerary
+                <MapPin className="w-4 h-4" /> 行程单
             </button>
             <button 
                 onClick={() => setActiveTab('explore')}
                 className={`flex-1 py-3 text-sm font-semibold flex items-center justify-center gap-2 ${activeTab === 'explore' ? 'text-brand-600 border-b-2 border-brand-500 bg-white' : 'text-gray-500 hover:text-gray-700'}`}
             >
-                <Compass className="w-4 h-4" /> Explore
+                <Compass className="w-4 h-4" /> 探索
             </button>
         </div>
 
@@ -261,7 +268,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     <div className="flex items-center justify-between mb-3">
                          <div className="flex items-center gap-2 text-sm text-gray-700 font-bold">
                             <Clock className="w-4 h-4 text-brand-500" />
-                            <span>Start Time:</span>
+                            <span>出发时间:</span>
                             <input 
                                 type="time" 
                                 value={startTime}
@@ -271,15 +278,15 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                          </div>
                     </div>
                     <div className="flex gap-4 text-xs text-gray-500">
-                         <div>Distance: <span className="font-bold text-gray-800">{routeData ? (routeData.distance / 1000).toFixed(1) : 0} km</span></div>
-                         <div>Travel: <span className="font-bold text-gray-800">{routeData ? Math.round(routeData.duration / 60) : 0} min</span></div>
+                         <div>距离: <span className="font-bold text-gray-800">{routeData ? (routeData.distance / 1000).toFixed(1) : 0} km</span></div>
+                         <div>行程: <span className="font-bold text-gray-800">{routeData ? Math.round(routeData.duration / 60) : 0} 分钟</span></div>
                     </div>
                 </div>
 
                 {waypoints.length === 0 && (
                     <div className="text-center py-10 text-gray-400">
                         <PlusCircle className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                        <p className="text-sm">Click map or search to add points</p>
+                        <p className="text-sm">点击地图或搜索添加地点</p>
                     </div>
                 )}
                 
@@ -312,7 +319,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                 {index > 0 && (
                                     <div className="ml-14 mb-2 flex items-center gap-2 text-xs text-gray-500 font-medium">
                                         <MoveVertical className="w-3 h-3" />
-                                        <span>Travel {travelTime} min</span>
+                                        <span>路程 {travelTime} 分钟</span>
                                     </div>
                                 )}
                                 <div className="flex gap-3 items-start group">
@@ -341,18 +348,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                                 value={wp.name}
                                                 onChange={(e) => updateWaypoint(wp.id, { name: e.target.value })}
                                                 className="w-full text-sm font-semibold text-gray-800 border-none p-0 focus:ring-0 placeholder-gray-400"
-                                                placeholder="Name this stop"
+                                                placeholder="地点名称"
                                             />
                                             <div className="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 p-2 rounded-lg">
                                                 <Clock className="w-3 h-3" />
-                                                <span>Stay:</span>
+                                                <span>停留:</span>
                                                 <input 
                                                     type="number"
                                                     value={wp.duration}
                                                     onChange={(e) => updateWaypoint(wp.id, { duration: parseInt(e.target.value) || 0 })}
                                                     className="w-12 bg-transparent border-b border-gray-300 text-center focus:border-brand-500 focus:outline-none p-0 text-gray-700 font-medium"
                                                 />
-                                                <span>min</span>
+                                                <span>分钟</span>
                                             </div>
                                             <div className="relative">
                                                 <FileText className="absolute top-2 left-2 w-3 h-3 text-gray-400" />
@@ -361,7 +368,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                                     onChange={(e) => updateWaypoint(wp.id, { notes: e.target.value })}
                                                     className="w-full text-xs text-gray-600 bg-white border border-gray-200 rounded-lg pl-7 pr-2 py-1.5 focus:ring-1 focus:ring-brand-500 focus:border-brand-500 resize-none placeholder-gray-400"
                                                     rows={2}
-                                                    placeholder="Add notes..."
+                                                    placeholder="添加备注..."
                                                 />
                                             </div>
                                         </div>
@@ -379,10 +386,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
               <div className="p-4 space-y-4">
                   <div className="bg-brand-50 border border-brand-100 rounded-xl p-4 mb-4">
                       <h3 className="font-bold text-brand-800 flex items-center gap-2">
-                          <Sparkles className="w-4 h-4" /> Recommended for You
+                          <Sparkles className="w-4 h-4" /> 为您推荐
                       </h3>
                       <p className="text-xs text-brand-600 mt-1">
-                          Curated spots based on your <strong>{user.persona}</strong> persona.
+                          基于您的 <strong>{PERSONA_DISPLAY_MAP[user.persona]}</strong> 画像精选地点。
                       </p>
                   </div>
 
@@ -403,7 +410,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                               <div className="flex justify-between items-start mb-2">
                                   <h4 className="font-bold text-gray-800">{place.name}</h4>
                                   <span className="text-xs font-semibold text-green-600">
-                                      {place.price === 0 ? 'Free' : `¥${place.price}`}
+                                      {place.price === 0 ? '免费' : `¥${place.price}`}
                                   </span>
                               </div>
                               <div className="flex justify-between items-center mt-3">
@@ -417,7 +424,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                   <button 
                                       onClick={() => addWaypoint(place.name, place.lat, place.lng)}
                                       className="bg-brand-50 text-brand-600 hover:bg-brand-600 hover:text-white p-2 rounded-lg transition-colors"
-                                      title="Add to Itinerary"
+                                      title="添加到行程"
                                   >
                                       <Plus className="w-4 h-4" />
                                   </button>
@@ -445,14 +452,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                     className={`w-full py-3 rounded-xl font-bold shadow-lg flex items-center justify-center gap-2 transition-all bg-gradient-to-r from-violet-600 to-indigo-600 text-white hover:from-violet-700 hover:to-indigo-700 ${loading || waypoints.length < 3 ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                     <Sparkles className="w-5 h-5" />
-                    Smart Optimize Route
+                    智能路线优化
                 </button>
                 <button
                     onClick={() => calculateRoute(waypoints)}
                     disabled={loading || waypoints.length < 2}
                     className="w-full py-3 rounded-xl font-semibold border-2 border-gray-200 text-gray-600 hover:bg-gray-50 flex items-center justify-center gap-2"
                 >
-                    {loading ? 'Refreshing...' : <><NavIcon className="w-5 h-5" /> Reset Order</>}
+                    {loading ? '刷新中...' : <><NavIcon className="w-5 h-5" /> 重置顺序</>}
                 </button>
             </div>
             </div>

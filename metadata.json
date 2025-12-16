@@ -1,6 +1,6 @@
 {
-  "name": "Jiantu - Personalized Travel",
-  "description": "A smart travel planning application featuring OSRM routing, custom waypoints, and personalized user profiles.",
+  "name": "简途 - 个性化旅行",
+  "description": "一款智能旅行规划应用，具有OSRM路线规划、自定义途经点和个性化用户画像功能。",
   "requestFramePermissions": [
     "geolocation"
   ]

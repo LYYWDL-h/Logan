@@ -4,6 +4,10 @@ export interface User {
   email: string;
   avatar: string;
   persona: 'Free Spirit' | 'Deep Explorer' | 'Efficiency Planner' | 'Creative Traveler';
+  // New profile fields
+  age?: number;
+  profession?: string;
+  bio?: string; // Mood or short bio
   stats: {
     tripsPlanned: number;
     placesVisited: number;
@@ -65,6 +69,13 @@ export interface DiaryEntry {
   isLiked: boolean; // Track if current user liked
   comments: Comment[];
   tags: string[];
+}
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  timestamp: number;
 }
 
 export enum ViewState {

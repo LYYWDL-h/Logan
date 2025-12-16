@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import TravelDiaries from './pages/TravelDiaries';
+import AIChat from './components/AIChat';
 import { ViewState, User, DiaryEntry, Comment } from './types';
 import { api } from './services/api';
 import { Loader2 } from 'lucide-react';
@@ -150,7 +151,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-gray-50 font-sans relative">
       <Navigation
         user={user}
         currentView={currentView}
@@ -179,6 +180,9 @@ const App: React.FC = () => {
         
         {currentView === ViewState.PROFILE && <Profile user={user} onUpdateUser={handleUpdateUser} />}
       </main>
+
+      {/* Floating AI Chat Widget */}
+      <AIChat user={user} />
     </div>
   );
 };

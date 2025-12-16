@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import { User } from '../types';
-import { Map, Trophy, Compass, Star, TrendingUp, Edit2, Check, X } from 'lucide-react';
+import { Map, Trophy, Compass, Star, TrendingUp, Edit2, Check, X, Briefcase, Calendar, Smile } from 'lucide-react';
 
 interface ProfileProps {
   user: User;
   onUpdateUser: (user: User) => void;
 }
 
+const PERSONA_DISPLAY_MAP: Record<string, string> = {
+  'Free Spirit': '自由灵魂',
+  'Deep Explorer': '深度探索者',
+  'Efficiency Planner': '效率规划师',
+  'Creative Traveler': '创意旅行家'
+};
+
 const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState<User>(user);
 
-  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setEditForm(prev => ({
       ...prev,
@@ -47,7 +54,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                         onClick={() => setIsEditing(true)}
                         className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
                     >
-                        <Edit2 className="w-4 h-4" /> Edit Profile
+                        <Edit2 className="w-4 h-4" /> 编辑资料
                     </button>
                  ) : (
                     <div className="flex gap-2">
@@ -55,13 +62,13 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                             onClick={handleSave}
                             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium shadow-lg transition-colors"
                         >
-                            <Check className="w-4 h-4" /> Save
+                            <Check className="w-4 h-4" /> 保存
                         </button>
                         <button 
                             onClick={handleCancel}
                             className="bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
                         >
-                            <X className="w-4 h-4" /> Cancel
+                            <X className="w-4 h-4" /> 取消
                         </button>
                     </div>
                  )}
@@ -80,52 +87,109 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
             </div>
             <div className="ml-6 mb-2 flex-1">
               {isEditing ? (
-                  <div className="space-y-3 max-w-sm mt-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase">Display Name</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">显示名称</label>
                         <input
                             type="text"
                             name="name"
                             value={editForm.name}
                             onChange={handleEditChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm border p-2"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase">Email</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">邮箱</label>
                         <input
                             type="email"
                             name="email"
                             value={editForm.email}
                             onChange={handleEditChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm border p-2"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border"
                         />
                       </div>
+                      
+                      <div className="flex gap-4">
+                          <div className="flex-1">
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-1">年龄</label>
+                            <input
+                                type="number"
+                                name="age"
+                                value={editForm.age || ''}
+                                onChange={handleEditChange}
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border"
+                            />
+                          </div>
+                          <div className="flex-[2]">
+                            <label className="block text-xs font-bold text-gray-500 uppercase mb-1">职业</label>
+                            <input
+                                type="text"
+                                name="profession"
+                                value={editForm.profession || ''}
+                                onChange={handleEditChange}
+                                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border"
+                            />
+                          </div>
+                      </div>
+
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase">Travel Persona</label>
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">旅行画像</label>
                         <select
                             name="persona"
                             value={editForm.persona}
                             onChange={handleEditChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm border p-2"
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border"
                         >
-                            <option value="Free Spirit">Free Spirit</option>
-                            <option value="Deep Explorer">Deep Explorer</option>
-                            <option value="Efficiency Planner">Efficiency Planner</option>
-                            <option value="Creative Traveler">Creative Traveler</option>
+                            <option value="Free Spirit">自由灵魂</option>
+                            <option value="Deep Explorer">深度探索者</option>
+                            <option value="Efficiency Planner">效率规划师</option>
+                            <option value="Creative Traveler">创意旅行家</option>
                         </select>
+                      </div>
+
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-bold text-gray-500 uppercase mb-1">当前心情 / 简介</label>
+                        <textarea
+                            name="bio"
+                            value={editForm.bio || ''}
+                            onChange={handleEditChange}
+                            rows={2}
+                            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 text-sm p-2 border resize-none"
+                            placeholder="今天感觉如何？"
+                        />
                       </div>
                   </div>
               ) : (
-                  <>
-                    <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
-                    <p className="text-gray-500 flex items-center gap-1">
-                        <Compass className="w-4 h-4" />
-                        {user.persona}
-                        <span className="mx-2 text-gray-300">|</span>
-                        <span className="text-sm">{user.email}</span>
-                    </p>
-                  </>
+                  <div className="mt-4">
+                    <div className="flex items-center gap-3 flex-wrap mb-1">
+                        <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
+                        <span className="bg-brand-100 text-brand-700 text-xs px-2 py-1 rounded-full font-bold border border-brand-200">
+                             {PERSONA_DISPLAY_MAP[user.persona]}
+                        </span>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-3">
+                        <span className="flex items-center gap-1">
+                            <Briefcase className="w-4 h-4 text-gray-400" />
+                            {user.profession || '旅行爱好者'}
+                        </span>
+                        {user.age && (
+                            <span className="flex items-center gap-1">
+                                <Calendar className="w-4 h-4 text-gray-400" />
+                                {user.age} 岁
+                            </span>
+                        )}
+                        <span className="text-gray-300">|</span>
+                        <span>{user.email}</span>
+                    </div>
+
+                    {user.bio && (
+                        <div className="inline-flex items-start gap-2 bg-yellow-50 text-yellow-800 px-3 py-2 rounded-lg border border-yellow-100 max-w-lg">
+                            <Smile className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                            <p className="italic text-sm">"{user.bio}"</p>
+                        </div>
+                    )}
+                  </div>
               )}
             </div>
           </div>
@@ -136,21 +200,21 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                      <Map className="w-6 h-6" />
                  </div>
                  <div className="text-2xl font-bold text-gray-800">{user.stats.tripsPlanned}</div>
-                 <div className="text-sm text-gray-500 font-medium">Trips Planned</div>
+                 <div className="text-sm text-gray-500 font-medium">已规划行程</div>
              </div>
              <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center">
                  <div className="inline-flex items-center justify-center p-3 bg-purple-100 text-purple-600 rounded-xl mb-3">
                      <Trophy className="w-6 h-6" />
                  </div>
                  <div className="text-2xl font-bold text-gray-800">{user.stats.placesVisited}</div>
-                 <div className="text-sm text-gray-500 font-medium">Places Visited</div>
+                 <div className="text-sm text-gray-500 font-medium">打卡地点</div>
              </div>
              <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 text-center">
                  <div className="inline-flex items-center justify-center p-3 bg-orange-100 text-orange-600 rounded-xl mb-3">
                      <TrendingUp className="w-6 h-6" />
                  </div>
                  <div className="text-2xl font-bold text-gray-800">{user.stats.kmTraveled}</div>
-                 <div className="text-sm text-gray-500 font-medium">Km Traveled</div>
+                 <div className="text-sm text-gray-500 font-medium">旅行里程</div>
              </div>
           </div>
         </div>
@@ -160,21 +224,21 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
       <div className="bg-white rounded-3xl shadow-lg border border-gray-100 p-8">
         <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
             <Star className="text-yellow-500 fill-current" />
-            Travel Persona Analysis
+            旅行画像分析
         </h3>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
                 <p className="text-gray-600 leading-relaxed">
-                    Based on your travel history, you are identified as a <span className="font-bold text-brand-600">{user.persona}</span>.
+                    基于您的旅行历史，您被识别为 <span className="font-bold text-brand-600">{PERSONA_DISPLAY_MAP[user.persona]}</span>。
                 </p>
                 <p className="text-sm text-gray-500">
-                    You refuse templates and pursue personalization and flexibility. You prefer discovering hidden gems over crowded hotspots.
+                    您拒绝千篇一律，追求个性与灵活。相比拥挤的热门景点，您更喜欢探索隐秘的宝藏。
                 </p>
 
                 <div className="mt-6">
                     <div className="flex justify-between text-sm font-medium text-gray-600 mb-2">
-                        <span>Spontaneity</span>
+                        <span>随性指数</span>
                         <span>85%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -184,7 +248,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
 
                 <div className="mt-4">
                     <div className="flex justify-between text-sm font-medium text-gray-600 mb-2">
-                        <span>Planning Detail</span>
+                        <span>计划精细度</span>
                         <span>40%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
@@ -197,9 +261,9 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser }) => {
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md mb-4">
                     <Compass className="w-12 h-12 text-brand-500" />
                 </div>
-                <h4 className="font-bold text-lg text-gray-800 mb-2">Recommended for you</h4>
+                <h4 className="font-bold text-lg text-gray-800 mb-2">为您推荐</h4>
                 <p className="text-sm text-gray-600">
-                    "Try the <span className="font-semibold text-brand-600">Free Marking</span> mode in our planner. It's designed for travelers like you who want to build their own path without constraints."
+                    "尝试规划器中的<span className="font-semibold text-brand-600">自由标记</span>模式。它是专为您这样喜欢无拘无束构建路径的旅行者设计的。"
                 </p>
             </div>
         </div>

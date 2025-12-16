@@ -94,7 +94,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                   onClick={() => onMarkerDelete(wp.id)}
                   className="text-xs bg-red-50 text-red-600 px-2 py-1 rounded hover:bg-red-100 transition-colors w-full font-medium"
                 >
-                  Remove Point
+                  移除地点
                 </button>
               </div>
             </Popup>
